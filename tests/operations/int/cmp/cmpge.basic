@@ -1,0 +1,6 @@
+Rem test: testing the >= operation
+
+Assert (2 >= 2) = True
+Assert (100 >= -100) = True
+Assert (5 >= 10) = False
+Assert (10 >= 11) = False

@@ -1,0 +1,9 @@
+Rem test: testing the / operation
+
+Assert 1 / 2 = 0
+Assert 5 / 2 = 2
+Assert 10 / 2 = 5
+Assert 10 / 10 = 1
+Assert 10 / -10 = -1
+Assert -10 / 10 = -1
+Assert -10 / -10 = 1

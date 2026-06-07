@@ -1,0 +1,6 @@
+Rem test: testing the > operation
+
+Assert (False > False) = False
+Assert (False > True) = False
+Assert (True > False) = True
+Assert (True > True) = False

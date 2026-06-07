@@ -1,0 +1,6 @@
+Rem test: testing the > operation
+
+Assert ("AAAA" > "A") = True
+Assert ("B" > "AAAA") = True
+Assert ("A" > "ABC") = False
+Assert ("_A_" > "_B_") = False
