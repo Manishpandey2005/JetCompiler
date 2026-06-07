@@ -1,0 +1,5 @@
+Rem test: rem is not part of the code
+
+Rem Assert 1 = 0
+Assert 1 = 1 Rem Exit 10
+Rem Exit 10
