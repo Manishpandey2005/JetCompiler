@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: basic-jit-studio
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3000"
+    plan: free
+    healthCheckPath: /api/health

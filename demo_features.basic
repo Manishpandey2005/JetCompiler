@@ -1,0 +1,104 @@
+Rem ==============================
+Rem   BASIC JIT - Feature Demo
+Rem ==============================
+
+Rem --- 1. Strings ---
+Print "=== BASIC JIT Compiler Demo ==="
+Print ""
+Print "--- 1. String Operations ---"
+Print "Hello" + " " + "World!"
+Print "Left 5 of Programming: "; Left("Programming", 5)
+Print "Right 4 of Compiler: "; Right("Compiler", 4)
+Print "Length of BASIC: "; Len("BASIC")
+Print "ASCII of A: "; Asc("A")
+Print "Char 66: "; Chr(66)
+Print ""
+
+Rem --- 2. Integer Math ---
+Print "--- 2. Integer Arithmetic ---"
+A% = 42
+B% = 13
+Print "42 + 13 = "; A + B
+Print "42 - 13 = "; A - B
+Print "42 * 13 = "; A * B
+Print "42 / 13 = "; A / B
+Print "42 Mod 13 = "; A Mod B
+Print "2 ^ 10 = "; 2 ^ 10
+Print ""
+
+Rem --- 3. Math Functions ---
+Print "--- 3. Built-in Math Functions ---"
+Print "Sin(0.5236) = "; Sin(0.5236)
+Print "Cos(0.5236) = "; Cos(0.5236)
+Print "Sqr(144) = "; Sqr(144)
+Print "Abs(-99) = "; Abs(-99)
+Print "Exp(1) = "; Exp(1)
+Print "Log(100) = "; Log(100)
+Print "Int(3.7) = "; Int(3.7)
+Print ""
+
+Rem --- 4. Boolean Logic ---
+Print "--- 4. Boolean Logic ---"
+X? = True
+Y? = False
+Print "True And False = "; X And Y
+Print "True Or False = "; X Or Y
+Print "Not True = "; Not X
+Print "True Xor True = "; X Xor X
+Print ""
+
+Rem --- 5. FOR Loop ---
+Print "--- 5. FOR Loop (Sum 1..10) ---"
+sum% = 0
+For I = 1 To 10
+    sum = sum + I
+Next I
+Print "Sum = "; sum
+Print ""
+
+Rem --- 6. FOR with Step ---
+Print "--- 6. FOR with Step ---"
+Print "Counting by 3: ";
+For I = 0 To 15 Step 3
+    Print I; " ";
+Next I
+Print ""
+Print ""
+
+Rem --- 7. IF/THEN/ELSE ---
+Print "--- 7. IF/THEN/ELSE ---"
+score% = 85
+If score >= 90 Then Print "Grade A" Else If score >= 80 Then Print "Grade B" Else Print "Grade C"
+Print ""
+
+Rem --- 8. User-Defined Functions ---
+Print "--- 8. DEF Functions ---"
+Def Fn fib%(N%) = (If N <= 1 Then N Else Fn fib(N - 1) + Fn fib(N - 2))
+Print "Fib(10) = "; Fn fib(10)
+Print "Fib(20) = "; Fn fib(20)
+Def Fn add(A, B) = A + B
+Def Fn mul(A, B) = A * B
+Print "3+4 = "; Fn add(3, 4)
+Print "5*6 = "; Fn mul(5, 6)
+Print ""
+
+Rem --- 9. DATA/READ ---
+Print "--- 9. DATA/READ ---"
+Data 10, 20, 30, 40, 50
+Read A%, B%, C%, D%, E%
+Print "Read: "; A; " "; B; " "; C; " "; D; " "; E
+Print ""
+
+Rem --- 10. GOSUB/RETURN ---
+Print "--- 10. GOSUB/RETURN ---"
+GoSub greet
+Print "Back from subroutine!"
+GoTo finish
+
+greet:
+Print "Hello from subroutine!"
+Return
+
+finish:
+Print ""
+Print "=== All Features Demonstrated! ==="

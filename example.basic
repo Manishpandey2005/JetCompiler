@@ -1,0 +1,194 @@
+Rem ==========================================
+Rem   BASIC JIT - Command Reference & Examples
+Rem ==========================================
+Rem
+Rem  Use "Rem" to write comments (ignored by compiler)
+Rem  Run this file:  ./build/release/bin/basicjit example.basic
+
+
+Rem ==========================================
+Rem  1. PRINT - Display output
+Rem ==========================================
+
+Print "Hello, World!"
+Print 42
+Print "Score: "; 100                   : Rem semicolon keeps items on same line
+Print "Line 1" : Print "Line 2"        : Rem colon separates statements on one line
+Print ""                                : Rem prints a blank line
+
+
+Rem ==========================================
+Rem  2. VARIABLES - Three types
+Rem ==========================================
+
+Rem  Integer (ends with %)
+age% = 21
+count% = 0
+
+Rem  Float/Double (no suffix)
+pi = 3.14159
+temperature = 98.6
+
+Rem  Boolean (ends with ?)
+isReady? = True
+isDone? = False
+
+Rem  String (ends with $)
+name$ = "Abhishek"
+
+Print "Name: "; name$
+Print "Age: "; age
+Print "Pi: "; pi
+Print "Ready? "; isReady
+
+
+Rem ==========================================
+Rem  3. ARITHMETIC - Math operators
+Rem ==========================================
+
+A% = 20
+B% = 7
+
+Print "20 + 7  = "; A + B              : Rem Addition
+Print "20 - 7  = "; A - B              : Rem Subtraction
+Print "20 * 7  = "; A * B              : Rem Multiplication
+Print "20 / 7  = "; A / B              : Rem Integer division
+Print "20 Mod 7= "; A Mod B            : Rem Remainder
+Print "2 ^ 8   = "; 2 ^ 8              : Rem Power
+
+
+Rem ==========================================
+Rem  4. MATH FUNCTIONS - Built-in
+Rem ==========================================
+
+Print "Abs(-5)    = "; Abs(-5)          : Rem Absolute value
+Print "Sqr(25)    = "; Sqr(25)          : Rem Square root
+Print "Int(3.9)   = "; Int(3.9)         : Rem Floor / truncate
+Print "Sin(1.57)  = "; Sin(1.57)        : Rem Sine (radians)
+Print "Cos(0)     = "; Cos(0)           : Rem Cosine
+Print "Exp(1)     = "; Exp(1)           : Rem e^x
+Print "Log(100)   = "; Log(100)         : Rem Natural log
+
+
+Rem ==========================================
+Rem  5. STRING FUNCTIONS - Built-in
+Rem ==========================================
+
+Print "Len(Hello)       = "; Len("Hello")
+Print "Left(Hello, 3)   = "; Left("Hello", 3)
+Print "Right(Hello, 3)  = "; Right("Hello", 3)
+Print "Asc(A)           = "; Asc("A")         : Rem ASCII code
+Print "Chr(90)          = "; Chr(90)           : Rem Character from code
+Print "Concat            = "; "Hi" + " " + "there"
+
+
+Rem ==========================================
+Rem  6. IF / THEN / ELSE - Conditionals
+Rem ==========================================
+
+score% = 75
+
+If score >= 90 Then Print "Grade: A"
+If score >= 80 Then Print "Grade: B"
+If score >= 70 Then Print "Grade: C"
+
+Rem  Single-line IF/ELSE:
+If score >= 80 Then Print "Pass with merit" Else Print "Pass"
+
+
+Rem ==========================================
+Rem  7. FOR / NEXT - Counted loops
+Rem ==========================================
+
+Rem  Basic loop: 1 to 5
+Print "Count 1-5: ";
+For I = 1 To 5
+    Print I; " ";
+Next I
+Print ""
+
+Rem  Loop with STEP
+Print "Even numbers: ";
+For I = 2 To 10 Step 2
+    Print I; " ";
+Next I
+Print ""
+
+Rem  Countdown with negative step
+Print "Countdown: ";
+For I = 5 To 1 Step -1
+    Print I; " ";
+Next I
+Print "Go!"
+
+
+Rem ==========================================
+Rem  8. BOOLEAN LOGIC - And, Or, Not, Xor
+Rem ==========================================
+
+P? = True
+Q? = False
+
+Print "True And False = "; P And Q
+Print "True Or  False = "; P Or Q
+Print "Not True       = "; Not P
+Print "True Xor False = "; P Xor Q
+
+
+Rem ==========================================
+Rem  9. DEF FN - User-defined functions
+Rem ==========================================
+
+Rem  Simple function
+Def Fn double(X) = X * 2
+Print "double(7) = "; Fn double(7)
+
+Rem  Two parameters
+Def Fn addNum(X, Y) = X + Y
+Print "add(3,4)  = "; Fn addNum(3, 4)
+
+Rem  Recursive function (Fibonacci)
+Def Fn fib%(N%) = (If N <= 1 Then N Else Fn fib(N - 1) + Fn fib(N - 2))
+Print "fib(10)   = "; Fn fib(10)
+
+
+Rem ==========================================
+Rem  10. DATA / READ - Stored data
+Rem ==========================================
+
+Data 10, 20, 30, 40, 50
+Read V%, W%, X%, Y%, Z%
+Print "Data values: "; V; " "; W; " "; X; " "; Y; " "; Z
+
+
+Rem ==========================================
+Rem  11. GOSUB / RETURN - Subroutines
+Rem ==========================================
+
+Print "Before subroutine"
+GoSub mySubroutine
+Print "After subroutine"
+GoTo endProgram
+
+mySubroutine:
+    Print "  >> Inside subroutine!"
+Return
+
+endProgram:
+
+
+Rem ==========================================
+Rem  12. GOTO - Jump to a label
+Rem ==========================================
+
+GoTo skipThis
+Print "You will never see this!"
+skipThis:
+Print "Jumped over the hidden message."
+
+
+Rem ==========================================
+Rem  Done!
+Rem ==========================================
+Print ""
+Print "=== Example Complete ==="
