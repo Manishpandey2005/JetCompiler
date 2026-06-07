@@ -1,0 +1,16 @@
+{
+  "name": "basicjit-compiler-studio",
+  "version": "2.0.0",
+  "description": "Interactive Web IDE for the BASIC JIT Compiler with compiler phase visualization",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

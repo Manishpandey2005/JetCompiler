@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BASIC JIT Compiler Studio — Interactive Compiler Visualization</title>
+    <meta name="description" content="Interactive web IDE for the BASIC JIT compiler. Write BASIC code, visualize lexical analysis, parsing, code generation, and JIT execution in real-time.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Monaco Editor -->
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ─── Header ─────────────────────────────────────────────── -->
+    <header id="app-header">
+        <div class="header-left">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <h1>BASIC JIT <span class="logo-accent">Compiler Studio</span></h1>
+            </div>
+            <span class="header-badge">JIT Compiled</span>
+        </div>
+        <div class="header-right">
+            <div class="examples-dropdown" id="examples-dropdown">
+                <button class="btn btn-ghost" id="examples-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    Examples
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+                </button>
+                <div class="dropdown-menu" id="examples-menu"></div>
+            </div>
+            <button class="btn btn-primary" id="run-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                Run
+                <kbd>Ctrl+Enter</kbd>
+            </button>
+        </div>
+    </header>
+
+    <!-- ─── Compiler Pipeline ──────────────────────────────────── -->
+    <section id="pipeline-bar">
+        <div class="pipeline-container">
+            <div class="pipeline-phase" id="phase-lexer" data-phase="lexer">
+                <div class="phase-indicator">
+                    <div class="phase-dot"></div>
+                    <span class="phase-number">1</span>
+                </div>
+                <div class="phase-info">
+                    <span class="phase-name">Lexical Analysis</span>
+                    <span class="phase-status">Ready</span>
+                </div>
+            </div>
+            <div class="pipeline-connector"><div class="connector-line"></div><div class="connector-arrow">▶</div></div>
+            <div class="pipeline-phase" id="phase-parser" data-phase="parser">
+                <div class="phase-indicator">
+                    <div class="phase-dot"></div>
+                    <span class="phase-number">2</span>
+                </div>
+                <div class="phase-info">
+                    <span class="phase-name">Parsing (AST)</span>
+                    <span class="phase-status">Ready</span>
+                </div>
+            </div>
+            <div class="pipeline-connector"><div class="connector-line"></div><div class="connector-arrow">▶</div></div>
+            <div class="pipeline-phase" id="phase-codegen" data-phase="codegen">
+                <div class="phase-indicator">
+                    <div class="phase-dot"></div>
+                    <span class="phase-number">3</span>
+                </div>
+                <div class="phase-info">
+                    <span class="phase-name">Code Generation</span>
+                    <span class="phase-status">Ready</span>
+                </div>
+            </div>
+            <div class="pipeline-connector"><div class="connector-line"></div><div class="connector-arrow">▶</div></div>
+            <div class="pipeline-phase" id="phase-execution" data-phase="execution">
+                <div class="phase-indicator">
+                    <div class="phase-dot"></div>
+                    <span class="phase-number">4</span>
+                </div>
+                <div class="phase-info">
+                    <span class="phase-name">JIT Execution</span>
+                    <span class="phase-status">Ready</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Main Content ───────────────────────────────────────── -->
+    <main id="main-content">
+        <!-- Editor Panel -->
+        <section id="editor-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16,18 22,12 16,6"/><polyline points="8,6 2,12 8,18"/></svg>
+                    Code Editor
+                </div>
+                <div class="panel-actions">
+                    <button class="btn btn-icon" id="clear-btn" title="Clear code">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,6 5,6 21,6"/><path d="M19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6m3,0V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2v2"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div id="monaco-editor"></div>
+        </section>
+
+        <!-- Output Panel -->
+        <section id="output-panel">
+            <div class="panel-header">
+                <div class="output-tabs">
+                    <button class="tab-btn active" data-tab="output" id="tab-output">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4,17 10,11 4,5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                        Output
+                    </button>
+                    <button class="tab-btn" data-tab="tokens" id="tab-tokens">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                        Tokens
+                        <span class="tab-badge" id="token-count"></span>
+                    </button>
+                    <button class="tab-btn" data-tab="ast" id="tab-ast">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/><line x1="12" y1="14" x2="6" y2="16"/><line x1="12" y1="14" x2="18" y2="16"/></svg>
+                        AST
+                    </button>
+                </div>
+                <div class="panel-actions">
+                    <span class="exec-time" id="exec-time"></span>
+                    <button class="btn btn-icon" id="copy-output" title="Copy output">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5,15H4a2,2,0,0,1-2-2V4A2,2,0,0,1,4,2H13a2,2,0,0,1,2,2V5"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="output-content">
+                <div class="tab-content active" id="content-output">
+                    <div class="output-terminal" id="output-terminal">
+                        <div class="terminal-placeholder">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><polyline points="4,17 10,11 4,5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                            <p>Press <kbd>Ctrl+Enter</kbd> or click <strong>Run</strong> to compile and execute.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content" id="content-tokens">
+                    <div class="tokens-container" id="tokens-container">
+                        <div class="terminal-placeholder">
+                            <p>Run your code to see the token stream from lexical analysis.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content" id="content-ast">
+                    <div class="ast-container" id="ast-container">
+                        <div class="terminal-placeholder">
+                            <p>Run your code to see the Abstract Syntax Tree.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ─── Error Popup Modal ──────────────────────────────────── -->
+    <div class="modal-overlay" id="error-modal">
+        <div class="error-modal">
+            <div class="error-modal-header">
+                <div class="error-phase-badge" id="error-phase-badge">
+                    <span class="error-icon">⚠</span>
+                    <span id="error-phase-text">Error in PARSER Phase</span>
+                </div>
+                <button class="btn btn-icon modal-close" id="error-close">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="error-modal-body">
+                <p class="error-message" id="error-message"></p>
+                <div class="error-source" id="error-source">
+                    <div class="error-line-number" id="error-line-num"></div>
+                    <pre class="error-code" id="error-code"></pre>
+                </div>
+                <div class="error-pointer" id="error-pointer"></div>
+            </div>
+            <div class="error-modal-footer">
+                <button class="btn btn-ghost" id="error-goto-line">Go to Line</button>
+                <button class="btn btn-primary" id="error-dismiss">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── Toast Notifications ────────────────────────────────── -->
+    <div id="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
