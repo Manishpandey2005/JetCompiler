@@ -1,0 +1,19 @@
+Rem test: testing mixed type read to variables
+
+Data 1, 2.5, "Hello", True
+
+Read A%, B., C$, D?
+
+Assert A = 1
+Assert B = 2.5
+Assert C = "Hello"
+Assert D = True
+
+Data 1, 2, 3
+
+Read X., Y., Z.
+
+Assert X = 1
+Assert Y = 2
+Assert Z = 3
+

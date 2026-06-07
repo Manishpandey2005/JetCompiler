@@ -1,0 +1,22 @@
+Rem test: restore allows setting the current data read offset
+
+Data 1, 2, 3
+second:
+Data 1, 2.5, "Hello", True
+
+Restore second
+
+Read A%, B., C$, D?
+
+Assert A = 1
+Assert B = 2.5
+Assert C = "Hello"
+Assert D = True
+
+Restore
+
+Read X., Y., Z.
+
+Assert X = 1
+Assert Y = 2
+Assert Z = 3

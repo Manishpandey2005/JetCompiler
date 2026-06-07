@@ -1,0 +1,11 @@
+Rem test: gosub can be returned to using return
+
+A = 0
+GoSub sub
+Assert A = 1
+End
+
+sub:
+A = 1
+Return
+End 1

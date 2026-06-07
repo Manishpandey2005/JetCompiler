@@ -1,0 +1,9 @@
+Rem test: testing reading string data to boolean variables
+
+Data "1", "2", "3"
+
+Read A?, B?, C?
+
+Assert A = False
+Assert B = False
+Assert C = False

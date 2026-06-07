@@ -1,0 +1,9 @@
+Rem test: testing reading string data to integer variables
+
+Data "1", "2", "3"
+
+Read A%, B%, C%
+
+Assert A = 0
+Assert B = 0
+Assert C = 0

@@ -1,0 +1,8 @@
+Rem test: function taking floats and returning strings
+
+X = 42
+
+Def Fn round(X) = Str(Int(X * 100))
+
+Assert Fn round(5.5) = "550"
+Assert X = 42

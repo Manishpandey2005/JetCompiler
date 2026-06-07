@@ -1,0 +1,5 @@
+Rem test: functions can have no parameters
+
+Def Fn double() = 10
+
+Assert Fn double() = 10

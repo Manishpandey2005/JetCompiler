@@ -1,0 +1,12 @@
+Rem test: goto can be used to implement a loop
+
+sum = 0
+A = 1
+loop_start:
+If A > 100 Then Goto loop_end
+    sum = sum + A
+    A = A + 1
+GoTo loop_start
+loop_end:
+
+Assert sum = 5050
